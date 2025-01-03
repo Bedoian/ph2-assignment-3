@@ -27,6 +27,7 @@ const userSchema = new Schema<TUser>({
             /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
             "Please enter a valid email address",
         ],
+        unique: true
     },
     password: {
         type: String,

@@ -19,14 +19,11 @@ const TUsernameSchema = z.object({
 
 // Validation schema for TUser
 const createUserZodValidationSchema = z.object({
-    body: z.object({
-        name: TUsernameSchema,
-        email: z.string().email("Invalid email address"),
-        password: z.string().min(1, "Password is required"),
-        role: z.enum(["admin", "user"]).default("user"),
-        isBlocked: z.boolean().default(false),
-    })
-
+    name: TUsernameSchema,
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(1, "Password is required"),
+    role: z.enum(["admin", "user"]).default("user"),
+    isBlocked: z.boolean().default(false),
 });
 
 export const userValidations = {

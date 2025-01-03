@@ -21,7 +21,6 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
         errorSources = simplifiedError.errorSource;
 
     }
-
     return res.status(statusCode).json({
         success: false,
         message,
