@@ -18,8 +18,7 @@ const getALlBlogsFromDB = async (query: Record<string, unknown>) => {
     return result
 }
 const updateBlogIntoDB = async (id: string, payload: Partial<TBlog>, authorId: string, userRole: string) => {
-    console.log(userRole);
-
+    console.log(id, payload, authorId, userRole);
     const blog = await Blog.findById(id);
     if (!blog) {
         throw new AppError(httpStatus.NOT_FOUND, 'Blog is not exists')

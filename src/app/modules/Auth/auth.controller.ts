@@ -1,7 +1,6 @@
 import { Request, Response } from "express"
 import { authService } from "./auth.service"
 import httpStatus from "http-status"
-import catchAsync from "../../utils/catchAsync"
 const loginUser = async (req: Request, res: Response) => {
     try {
         const user = await authService.loginUser(req.body)

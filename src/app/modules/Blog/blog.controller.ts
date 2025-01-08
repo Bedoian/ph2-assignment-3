@@ -29,17 +29,14 @@ const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
     })
 })
 const updateBlog = catchAsync(async (req: Request, res: Response) => {
-    const { userId,role } = req.user;
-    const result = await blogServices.updateBlogIntoDB(req.params.id, req.body, userId,role)
+    const { userId, role } = req.user;
+    console.log(req.user);
+    const result = await blogServices.updateBlogIntoDB(req.params.id, req.body, userId, role)
     res.status(httpStatus.OK).json({
         success: true,
         message: "Blog updated successfully",
         statusCode: 200,
-        data: {
-            _id: result?._id,
-            title: result?.title,
-            content: result?.content
-        }
+        data: result
     })
 })
 const deleteBlog = catchAsync(async (req: Request, res: Response) => {

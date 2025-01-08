@@ -19,7 +19,7 @@ const test = async (req: Request, res: Response) => {
 }
 app.get('/', test)
 // global error handle
-app.use(globalErrorHandler as any)
+app.use(globalErrorHandler)
 // not found
-app.use(notFound as any)
+app.use(notFound)
 export default app
