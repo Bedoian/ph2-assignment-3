@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { userServices } from "./user.service";
 import httpStatus from "http-status";
-const createUser = async (req: Request, res: Response) => {
+import catchAsync from "../../utils/catchAsync";
+const createUser = catchAsync(async (req: Request, res: Response) => {
     const result = await userServices.createUserIntoDB(req.body);
     res.status(httpStatus.OK).json({
         success: true,
@@ -13,15 +14,15 @@ const createUser = async (req: Request, res: Response) => {
             email: result.email
         }
     })
-}
-const updateUser = async (req: Request, res: Response) => {
-    const result = await userServices.updateUserIntoDB(req.params.id, req.body);
+})
+const updateUser = catchAsync(async (req: Request, res: Response) => {
+    await userServices.updateUserIntoDB(req.params.id);
     res.status(httpStatus.OK).json({
         success: true,
         message: 'User Blocked Successfully',
         statusCode: 200,
     })
-}
+})
 
 export const userController = {
     createUser,

@@ -4,12 +4,13 @@ import cors from 'cors'
 import router from './app/routes'
 import globalErrorHandler from './app/middlewares/global.error.handler'
 import notFound from './app/middlewares/notFound'
+import cookieParser from 'cookie-parser'
 const app: Application = express()
 
 // parser
 app.use(express.json())
 app.use(cors({ origin: ['http://localhost:5173'] }))
-
+app.use(cookieParser())
 // application routes
 app.use('/api/', router)
 

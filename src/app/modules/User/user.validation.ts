@@ -4,7 +4,7 @@ import { z } from "zod";
 const createUserZodValidationSchema = z.object({
     name: z.string()
         .trim()
-        .max(20, "First name cannot be more than 20 characters"),
+        .max(20, "name cannot be more than 20 characters"),
     email: z.string().email("Invalid email address"),
     password: z.string().min(1, "Password is required"),
     role: z.enum(["admin", "user"]).default("user"),

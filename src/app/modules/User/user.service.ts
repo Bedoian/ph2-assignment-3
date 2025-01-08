@@ -5,12 +5,12 @@ const createUserIntoDB = async (payload: TUser) => {
     const result = await User.create(payload)
     return result
 }
-const updateUserIntoDB = async (id: string, payload: Record<string, boolean>) => {
+const updateUserIntoDB = async (id: string) => {
     const user = await User.findById(id);
     if (!user) {
         throw new Error('User is not exists')
     }
-    const result = await User.findByIdAndUpdate(id, payload, { new: true })
+    const result = await User.findByIdAndUpdate(id, { isBlocked: true }, { new: true })
     return result
 }
 export const userServices = {
