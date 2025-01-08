@@ -4,12 +4,13 @@ import { ZodError } from "zod";
 import handleZodError from "../error/handleZodError";
 import handleValidationError from "../error/handle.Validation.Error";
 import handleDuplicateError from "../error/handle.Duplicate";
+import AppError from "../error/AppError";
 
 const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     // default templet
     let statusCode = 500;
     let message = 'Something going wrong'
-    let errorSources: TErrorSource = [
+    let error: TErrorSource = [
         {
             path: '/',
             message: 'Something going wrong'
@@ -20,27 +21,32 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
         const simplifiedError = handleDuplicateError(err)
         statusCode = simplifiedError?.statusCode;
         message = simplifiedError?.message;
-        errorSources = simplifiedError?.errorSources
+        error = simplifiedError?.errorSources
     }
     else if (err instanceof ZodError) {
         const simplifiedError = handleZodError(err)
         statusCode = simplifiedError.statusCode;
         message = simplifiedError.message;
-        errorSources = simplifiedError.errorSource;
+        error = simplifiedError.errorSource;
 
     }
-    //    else if (err.name = "ValidationError") {
-    //         const simplifiedError = handleValidationError(err);
-    //         statusCode = simplifiedError.statusCode;
-    //         message = simplifiedError.message;
-    //         errorSources = simplifiedError.errorSource;
-    //     }
+    else if (err.name = "ValidationError") {
+        const simplifiedError = handleValidationError(err);
+        statusCode = simplifiedError.statusCode;
+        message = simplifiedError.message;
+        error = simplifiedError.errorSource;
+    }
+    else if (err instanceof AppError) {
+        statusCode = err?.statusCode;
+        message = err?.message;
+
+    }
     return res.status(statusCode).json({
         success: false,
         message,
-        errorSources,
-        stack: err?.stack,
-        err
+        statusCode,
+        error,
+        stack: err?.stack
     })
 }
 

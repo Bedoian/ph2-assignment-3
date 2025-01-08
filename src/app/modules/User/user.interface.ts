@@ -13,6 +13,6 @@ export interface UserModel extends Model<TUser> {
     // myStaticMethod(): number;
     isUserExistsByEmail(email: string): Promise<TUser>
     isPasswordMatched(plainTextPassword: string, hashedPassword: string): Promise<boolean>
-    // isJWTIssuedBeforePasswordChanged( passwordChangedTimestamp: Date,jwtIssuedTimestamp: number,): boolean;
+   
     
 }

@@ -1,7 +1,9 @@
 import QueryBuilder from "../../builder/QueryBuilder";
+import AppError from "../../error/AppError";
 import { searchableBlogFields } from "./blog.constant";
 import { TBlog } from "./blog.interface";
 import Blog from "./blog.model";
+import httpStatus from "http-status";
 const createBlogIntoDB = async (payload: TBlog, author: string) => {
     const result = await Blog.create({ ...payload, author })
     return result
@@ -20,12 +22,11 @@ const updateBlogIntoDB = async (id: string, payload: Partial<TBlog>, authorId: s
 
     const blog = await Blog.findById(id);
     if (!blog) {
-        throw new Error('Blog is not exists')
+        throw new AppError(httpStatus.NOT_FOUND, 'Blog is not exists')
     }
-    // console.log(blog.author?.toString(),
     // authorId);
     if (blog.author?.toString() !== authorId) {
-        throw new Error('You are not authorized to update this blog')
+        throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized to update this blog')
     }
     const result = await Blog.findByIdAndUpdate(id, payload, { new: true })
     return result
@@ -34,11 +35,11 @@ const deleteBlogFromDB = async (id: string, authorId: string, userRole: string) 
 
     const blog = await Blog.findById(id);
     if (!blog) {
-        throw new Error('Blog is not exists')
+        throw new AppError(httpStatus.UNAUTHORIZED, 'Blog is not exists')
     }
 
     if (blog.author?.toString() !== authorId) {
-        throw new Error('You are not authorized to delete this blog')
+        throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized to delete this blog')
     }
     const result = await Blog.findByIdAndDelete(id)
     return result

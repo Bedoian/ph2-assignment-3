@@ -6,6 +6,6 @@ import auth from '../../middlewares/auth';
 
 const router = express.Router();
 
-router.post('/register', userController.createUser)
-router.patch('/:id/block',auth(['admin']), userController.updateUser)
+router.post('/register', validateRequest(userValidations.createUserZodValidationSchema), userController.createUser)
+router.patch('/:id/block', auth(['admin']), userController.updateUser)
 export const userRoute = router;
