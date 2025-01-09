@@ -33,13 +33,17 @@ const createBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     });
 }));
 const getAllBlogs = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // console.log(req.user);
     const result = yield blog_service_1.blogServices.getALlBlogsFromDB(req.query);
     res.status(http_status_1.default.OK).json({
         success: true,
         message: "Blogs fetched successfully",
         statusCode: 200,
-        data: result
+        data: {
+            _id: result === null || result === void 0 ? void 0 : result._id,
+            title: result === null || result === void 0 ? void 0 : result.title,
+            content: result === null || result === void 0 ? void 0 : result.content,
+            author: result === null || result === void 0 ? void 0 : result.author
+        }
     });
 }));
 const updateBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

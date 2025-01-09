@@ -21,7 +21,7 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     res.status(http_status_1.default.OK).json({
         success: true,
         statusCode: 200,
-        message: "User logged in successfully",
+        message: "Login successful",
         data: {
             token: user.token
         }

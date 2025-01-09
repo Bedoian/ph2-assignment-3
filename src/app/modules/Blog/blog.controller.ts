@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { blogServices } from "./blog.service";
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
-import auth from "../../middlewares/auth";
 const createBlog = catchAsync(async (req: Request, res: Response) => {
     const { userId } = req.user;
     // console.log(userId);
@@ -20,13 +19,18 @@ const createBlog = catchAsync(async (req: Request, res: Response) => {
     })
 })
 const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
-    // console.log(req.user);
     const result = await blogServices.getALlBlogsFromDB(req.query)
+    const filteredResult = result?.map((blog) => ({
+        _id: blog._id,
+        title: blog.title,
+        content: blog.content,
+        author: blog.author,
+    }))
     res.status(httpStatus.OK).json({
         success: true,
         message: "Blogs fetched successfully",
         statusCode: 200,
-        data: result
+        data: filteredResult
     })
 })
 const updateBlog = catchAsync(async (req: Request, res: Response) => {
