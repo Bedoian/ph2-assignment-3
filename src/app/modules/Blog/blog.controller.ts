@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { blogServices } from "./blog.service";
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
+import auth from "../../middlewares/auth";
 const createBlog = catchAsync(async (req: Request, res: Response) => {
     const { userId } = req.user;
     // console.log(userId);
@@ -23,20 +24,25 @@ const getAllBlogs = catchAsync(async (req: Request, res: Response) => {
     const result = await blogServices.getALlBlogsFromDB(req.query)
     res.status(httpStatus.OK).json({
         success: true,
-        message: "All Blogs fetched successfully",
+        message: "Blogs fetched successfully",
         statusCode: 200,
         data: result
     })
 })
 const updateBlog = catchAsync(async (req: Request, res: Response) => {
     const { userId, role } = req.user;
-    console.log(req.user);
+    // console.loag(req.user);
     const result = await blogServices.updateBlogIntoDB(req.params.id, req.body, userId, role)
     res.status(httpStatus.OK).json({
         success: true,
         message: "Blog updated successfully",
         statusCode: 200,
-        data: result
+        data: {
+            _id: result?._id,
+            title: result?.title,
+            content: result?.content,
+            author: result?.author,
+        }
     })
 })
 const deleteBlog = catchAsync(async (req: Request, res: Response) => {
@@ -46,11 +52,6 @@ const deleteBlog = catchAsync(async (req: Request, res: Response) => {
         success: true,
         message: "Blog deleted successfully",
         statusCode: 200,
-        data: {
-            success: true,
-            message: "Blog deleted successfully",
-            statusCode: 200
-        }
     })
 })
 export const blogController = {

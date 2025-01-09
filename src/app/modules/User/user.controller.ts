@@ -6,7 +6,7 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
     const result = await userServices.createUserIntoDB(req.body);
     res.status(httpStatus.OK).json({
         success: true,
-        message: 'User Registerd Successfully',
+        message: 'User registerd successfully',
         statusCode: 201,
         data: {
             _id: result._id,
@@ -15,8 +15,8 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
         }
     })
 })
-const updateUser = catchAsync(async (req: Request, res: Response) => {
-    await userServices.updateUserIntoDB(req.params.id);
+const blockUser = catchAsync(async (req: Request, res: Response) => {
+    await userServices.updateUserIntoDB(req.params.userId);
     res.status(httpStatus.OK).json({
         success: true,
         message: 'User Blocked Successfully',
@@ -26,5 +26,5 @@ const updateUser = catchAsync(async (req: Request, res: Response) => {
 
 export const userController = {
     createUser,
-    updateUser
+    blockUser
 }

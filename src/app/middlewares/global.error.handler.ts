@@ -30,7 +30,7 @@ const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFun
         error = simplifiedError.errorSource;
 
     }
-    else if (err.name = "ValidationError") {
+    else if (err.name === "ValidationError") {
         const simplifiedError = handleValidationError(err);
         statusCode = simplifiedError.statusCode;
         message = simplifiedError.message;

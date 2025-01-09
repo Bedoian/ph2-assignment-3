@@ -9,7 +9,7 @@ const router = Router()
 router.post('/', auth(['user']), validateRequest(blogValidation.createBlogValidationSchema), blogController.createBlog)
 router.patch('/:id', auth(['user']), blogController.updateBlog)
 router.delete('/:id', auth(['user', 'admin']), blogController.deleteBlog)
-router.get('/', auth(['user']), blogController.getAllBlogs)
+router.get('/', auth(['user', 'admin']), blogController.getAllBlogs)
 
 
 

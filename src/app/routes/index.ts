@@ -8,7 +8,7 @@ const router = Router();
 
 const moduleRoutes = [
     {
-        path: '/users',
+        path: '/auth',
         route: userRoute
     },
     {
@@ -18,6 +18,15 @@ const moduleRoutes = [
     {
         path: '/auth',
         route: authRoute
+    },
+    // admin routes
+    {
+        path: '/admin/users',
+        route: userRoute
+    },
+    {
+        path: '/admin/blogs',
+        route: blogRoute
     }
 ]
 
